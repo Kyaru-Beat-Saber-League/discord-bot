@@ -1,0 +1,35 @@
+{
+  "name": "discord-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "server": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kyaru-Beat-Saber-League/discord-bot.git"
+  },
+  "author": "izuna_1",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kyaru-Beat-Saber-League/discord-bot/issues"
+  },
+  "homepage": "https://github.com/Kyaru-Beat-Saber-League/discord-bot#readme",
+  "dependencies": {
+    "axios": "^1.3.4",
+    "discord.js": "^14.8.0",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "fs": "^0.0.1-security",
+    "fs-extra": "^11.1.0",
+    "glob": "7.2.3",
+    "libsodium-wrappers": "^0.7.11",
+    "moment": "^2.29.4",
+    "ms": "^2.1.3",
+    "nodemon": "^2.0.21",
+    "opusscript": "^0.0.8",
+    "path": "^0.12.7",
+    "ws": "^8.13.0"
+  }
+}
