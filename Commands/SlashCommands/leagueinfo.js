@@ -1,6 +1,6 @@
 const { CommandInteraction, ApplicationCommandType, ApplicationCommandOptionType } = require('discord.js');
 const client = require('../../index.js');
-const { Leaguelist } = require('../../Interface/League')
+const { Leagueinfo } = require('../../Interface/League')
 module.exports = {
     name: 'leagueinfo',
     description: '리그정보',
@@ -21,7 +21,7 @@ module.exports = {
      */
     run: async (client, interaction, args) => {
         const seq = interaction.options.get('seq')
-        const list = await Leaguelist(seq.value)
+        const list = await Leagueinfo(seq.value)
         await interaction.reply({content:`\`\`\`${JSON.stringify(list?.data)}\`\`\``})
     }
 }

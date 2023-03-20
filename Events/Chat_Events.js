@@ -7,4 +7,7 @@ module.exports = {
 }
 
 client.on(Discord.Events.MessageCreate, async (message) => {
+    if(message.author.bot) return;
+    if(message.channel.type === 'DM') return;
+    if(message.content.startsWith(client.config.prefix)) return;
 })
