@@ -19,7 +19,7 @@ TOKEN="Your Discord Bot Token" // Discord Bot Token
 ## config.js Config
 ````javascript
 module.exports = {
-    ownerID: "380629788940959746", // Your Discord ID
+    ownerID: "Your Discord ID", // Your Discord ID
     prefix: ";", // Prefix
     izuna: "Created By. Izuna_1", // Do not change this
 }
