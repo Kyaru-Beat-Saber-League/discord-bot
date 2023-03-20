@@ -1,6 +1,5 @@
 const Discord = require('discord.js');
 const client = require('../index.js');
-const { SscErr } = require('../Interface/Embed.js')
 
 module.exports = {
     name: 'SlashCommand_Enable',
@@ -9,14 +8,19 @@ module.exports = {
 client.on(Discord.Events.InteractionCreate, async (interaction) => {
     if (interaction.user.bot) return;
     if (interaction.channel.type === Discord.ChannelType.DM) return;
+    const ErrorEmbed = new Discord.EmbedBuilder()
+    ErrorEmbed.setTitle("에러!")
+    
     if (interaction.isCommand()) {
         const cmd = client.slashcommands.get(interaction.commandName);
-        if (!cmd) return await interaction.reply({ embeds:[SscErr(`명령어가 존재하지 않습니다.`)], ephemeral: true });
+        ErrorEmbed.setDescription("에러가 발생했습니다!\n" + `\`\`\`명령어가 존재하지 않습니다.\`\`\``)
+        if (!cmd) return await interaction.reply({ embeds:[ErrorEmbed], ephemeral: true });
         const args = [];
         if (cmd.permission) {
             const authorperms = interaction.channel.permissionsFor(interaction.member);
             if (!authorperms || !authorperms.has(cmd.permission)) {
-                return await interaction.reply({ embeds:[SscErr(`권한이 부족합니다.`)], ephemeral: true });
+                ErrorEmbed.setDescription("에러가 발생했습니다!\n" + `\`\`\`권한이 부족합니다.\`\`\``)
+                return await interaction.reply({ embeds:[ErrorEmbed], ephemeral: true });
             }
         }
         for (let option of interaction.options.data) {
@@ -31,18 +35,21 @@ client.on(Discord.Events.InteractionCreate, async (interaction) => {
         try {
             await cmd.run(client, interaction, args);
         } catch (err) {
-            await interaction.reply({ embeds:[SscErr(err)], ephemeral: true });
+            ErrorEmbed.setDescription("에러가 발생했습니다!\n" + `\`\`\`${err}\`\`\``)
+            await interaction.reply({ embeds:[ErrorEmbed], ephemeral: true });
             console.log(err);
             return;
         }
     }
     if (interaction.isContextMenuCommand()) {
         const cmd = client.slashcommands.get(interaction.commandName);
-        if (!cmd) return await interaction.reply({ embeds:[errorEmbed], ephemeral: true });
+        ErrorEmbed.setDescription("에러가 발생했습니다!\n" + `\`\`\`명령어가 존재하지 않습니다.\`\`\``)
+        if (!cmd) return await interaction.reply({ embeds:[ErrorEmbed], ephemeral: true });
         try {
             if (cmd) await cmd.run(client, interaction);
         } catch (err) {
-            await interaction.reply({ embeds:[SscErr(err)], ephemeral: true });
+            ErrorEmbed.setDescription("에러가 발생했습니다!\n" + `\`\`\`${err}\`\`\``)
+            await interaction.reply({ embeds:[ErrorEmbed], ephemeral: true });
             console.log(err);
             return;
         }

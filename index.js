@@ -1,4 +1,4 @@
-const { Client, Collection, Partials, IntentsBitField, Events } = require('discord.js');
+const { Client, Collection, Partials, IntentsBitField} = require('discord.js');
 require('dotenv').config()
 
 const client = new Client({
