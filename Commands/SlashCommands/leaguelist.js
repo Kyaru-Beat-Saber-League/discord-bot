@@ -36,13 +36,13 @@ module.exports = {
             } else {
                 pages.push(list.content)
             }
+            
             const embed = new EmbedBuilder()
             embed.setTitle(`리그 리스트 [${page}/${pages.length}]`)
             if (page < 1) embed.setTitle(`리그 리스트 [${page + 1}/${pages.length}]`)
             embed.setColor(0x00FF00)
             if (page > 0) page -= 1
             if (page < pages.length) {
-                console.log(list)
                 for (let i = 0; i < pages[page].length; i++) {
                     const pag = pages[page][i]
                     let lstatus = ''
@@ -56,13 +56,15 @@ module.exports = {
                         case '종료':
                             lstatus = '🔴'
                     }
-                    embed.addFields({ name: `${lstatus} ${pag.leagueName} [ #${pag.seq} ]`, value: `${pag.description}\n\n**시작: ${pag.leagueStartDtime}\n끝: ${pag.leagueEndDtime}**\n[이동하기](https://kbsl.dev/league/detail?${pag.seq})` })
+                    embed.addFields({ name: `${lstatus} ${pag.leagueName} [ #${pag.seq} ]`, value: `${pag.description}\n\n만든사람: ${pag.userName}\n**시작: ${pag.leagueStartDtime}\n끝: ${pag.leagueEndDtime}**\n[이동하기](https://kbsl.dev/league/detail?${pag.seq})` })
                 }
             }
             else {
-                embed.setDescription('페이지가 존재하지 않습니다.')
+                embed.setDescription('해당 페이지에는 리그가 존재하지 않습니다.')
             }
+            if(pages[page].length == 0) embed.setDescription('리그 목록이 존재하지 않습니다.')
             await interaction.reply({ embeds: [embed] })
+            console.log(list)
         } catch (err) {
             console.log(err)
         }

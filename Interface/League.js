@@ -13,7 +13,7 @@ async function Leagueinfo(msg){
 }
 async function Leaguelist(msg){
     if(!msg) msg = 0;
-    const getlist = await axios.get(`${Endpoint_API}/league?page=${msg}`).catch((err) => {
+    const getlist = await axios.get(`${Endpoint_API}/league?page=${msg}&leagueStatusType=TYPE_ALL`).catch((err) => {
         return err.response
     })
     return getlist.data.data

@@ -1,4 +1,4 @@
-const { CommandInteraction, ApplicationCommandType, ApplicationCommandOptionType } = require('discord.js');
+const { CommandInteraction, ApplicationCommandType, ApplicationCommandOptionType, EmbedBuilder } = require('discord.js');
 const client = require('../../index.js');
 const { Leagueinfo } = require('../../Interface/League')
 module.exports = {
@@ -22,6 +22,12 @@ module.exports = {
     run: async (client, interaction, args) => {
         const seq = interaction.options.get('seq')
         const list = await Leagueinfo(seq.value)
-        await interaction.reply({content:`\`\`\`${JSON.stringify(list?.data)}\`\`\``})
+        const res = list?.data
+        const data = res?.data
+        console.log(res)
+        if(res.success == false) return interaction.reply({content:`\`\`\`${res.message}\n에러코드: ${res.status}\`\`\``})
+        const embed = new EmbedBuilder()
+        embed.setTitle(`${data.leagueName} [ #${data.seq} ]`)
+        await interaction.reply({content:`\`\`\`${JSON.stringify(res.data)}\`\`\``,embeds:[embed]})
     }
 }
