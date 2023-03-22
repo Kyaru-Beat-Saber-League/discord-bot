@@ -19,4 +19,12 @@ async function Leaguelist(msg){
     return getlist.data.data
 }
 
-module.exports = { Leagueinfo, Leaguelist }
+async function Leaguetimer(msg){
+    if(!msg) msg = 1
+    const getlist = await axios.get(`${Endpoint_API}/league?page=0&leagueStatusType=TYPE_ALL`).catch((err) => {
+        return err.response
+    })
+    return getlist.data.data
+}
+
+module.exports = { Leagueinfo, Leaguelist, Leaguetimer }

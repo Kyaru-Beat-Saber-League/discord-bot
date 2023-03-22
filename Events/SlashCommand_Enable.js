@@ -20,7 +20,9 @@ client.on(Discord.Events.InteractionCreate, async (interaction) => {
             const authorperms = interaction.channel.permissionsFor(interaction.member);
             if (!authorperms || !authorperms.has(cmd.permission)) {
                 ErrorEmbed.setDescription("에러가 발생했습니다!\n" + `\`\`\`권한이 부족합니다.\`\`\``)
-                return await interaction.reply({ embeds:[ErrorEmbed], ephemeral: true });
+                await interaction.reply({ embeds:[ErrorEmbed], ephemeral: true });
+                console.log(`${cmd.name} | ${interaction.member.user.tag} | ${interaction.member.id} | ${interaction.guild.name} | ${interaction.guild.id} | 권한 부족`);
+                return false;
             }
         }
         for (let option of interaction.options.data) {
@@ -38,7 +40,7 @@ client.on(Discord.Events.InteractionCreate, async (interaction) => {
             ErrorEmbed.setDescription("에러가 발생했습니다!\n" + `\`\`\`${err}\`\`\``)
             await interaction.reply({ embeds:[ErrorEmbed], ephemeral: true });
             console.log(err);
-            return;
+            return false;
         }
     }
     if (interaction.isContextMenuCommand()) {
@@ -51,7 +53,7 @@ client.on(Discord.Events.InteractionCreate, async (interaction) => {
             ErrorEmbed.setDescription("에러가 발생했습니다!\n" + `\`\`\`${err}\`\`\``)
             await interaction.reply({ embeds:[ErrorEmbed], ephemeral: true });
             console.log(err);
-            return;
+            return false;
         }
     }
 })

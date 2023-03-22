@@ -4,15 +4,15 @@ const axios = require('axios')
 const fs = require('fs')
 const path = require('path')
 
-const Endpoint_API = 'https://api.kbsl.dev:443'
+const { Leaguetimer } = require('../Interface/League')
+
 const channelname = '리그-알림'
 
 async function newleagealert(chh) {
     try {
         const configpath = path.join(__dirname, '../config/leagueconfig.js')
         let config = require(configpath)
-        const res = await axios.get(`${Endpoint_API}/league?page=0&leagueStatusType=TYPE_ALL`)
-        const data = res.data.data;
+        const data = await Leaguetimer()
         const lastNotice = data.content[0];
         if (lastNotice.seq !== config.newlgseq) {
             client.guilds.cache.forEach(guild => {

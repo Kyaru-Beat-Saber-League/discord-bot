@@ -1,4 +1,4 @@
-const { CommandInteraction, ApplicationCommandType, ApplicationCommandOptionType, EmbedBuilder, ButtonBuilder, ButtonStyle, ComponentBuilder, ActionRowBuilder, Colors, BaseSelectMenuBuilder } = require('discord.js');
+const { CommandInteraction, ApplicationCommandType, ApplicationCommandOptionType, EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, Colors } = require('discord.js');
 const client = require('../../index.js');
 const { Leagueinfo } = require('../../Interface/League')
 
@@ -22,12 +22,11 @@ module.exports = {
      * @param {CommandInteraction} interaction
      * @param {String[]} args
      */
-    run: async (client, interaction, args) => {
+    run: async (client, interaction) => {
         const seq = interaction.options.get('seq')
         const list = await Leagueinfo(seq.value)
         const res = list?.data
         const data = res?.data
-        console.log(res)
         if (res.success == false) return interaction.reply({ content: `\`\`\`${res.message}\n에러코드: ${res.status}\`\`\`` })
         let lstatus = ''
         switch (data.leagueStatus) {
@@ -81,26 +80,26 @@ module.exports = {
                     }
                     const slembed = new EmbedBuilder()
                     // slpages button
-                    const slb = new ButtonBuilder()
-                    slb.setLabel('이전')
-                    slb.setStyle(ButtonStyle.Primary)
-                    slb.setCustomId('slb')
-                    const slb2 = new ButtonBuilder()
-                    slb2.setLabel('다음')
-                    slb2.setStyle(ButtonStyle.Primary)
-                    slb2.setCustomId('slb2')
-                    const slb3 = new ButtonBuilder()
-                    slb3.setLabel('취소')
-                    slb3.setStyle(ButtonStyle.Danger)
-                    slb3.setCustomId('slb3')
-                    const slb4 = new ButtonBuilder()
-                    slb4.setLabel('마지막')
-                    slb4.setStyle(ButtonStyle.Primary)
-                    slb4.setCustomId('slb4')
-                    const slb5 = new ButtonBuilder()
-                    slb5.setLabel('처음')
-                    slb5.setStyle(ButtonStyle.Primary)
-                    slb5.setCustomId('slb5')
+                    const back = new ButtonBuilder()
+                    back.setLabel('이전')
+                    back.setStyle(ButtonStyle.Primary)
+                    back.setCustomId('back')
+                    const next = new ButtonBuilder()
+                    next.setLabel('다음')
+                    next.setStyle(ButtonStyle.Primary)
+                    next.setCustomId('next')
+                    const cancel = new ButtonBuilder()
+                    cancel.setLabel('취소')
+                    cancel.setStyle(ButtonStyle.Danger)
+                    cancel.setCustomId('cancel')
+                    const end = new ButtonBuilder()
+                    end.setLabel('마지막')
+                    end.setStyle(ButtonStyle.Primary)
+                    end.setCustomId('end')
+                    const first = new ButtonBuilder()
+                    first.setLabel('처음')
+                    first.setStyle(ButtonStyle.Primary)
+                    first.setCustomId('first')
                     slembed.setTitle(`곡 리스트 [${page}/${slpages.length}]`)
                     if (page < 1) slembed.setTitle(`곡 리스트 [${page + 1}/${slpages.length}]`)
                     slembed.setColor(Colors.Fuchsia)
@@ -121,20 +120,20 @@ module.exports = {
                             **OneClick**
                             <beatsaver://${sls.songId}>`
                             })
-
                         }
                     }
                     else {
                         slembed.setDescription('해당 페이지에는 곡이 존재하지 않습니다.')
                     }
                     if (slpages[page].length == 0) slembed.setDescription('곡이 존재하지 않습니다.')
-
-                    const slmenucom = new ActionRowBuilder().addComponents([slb3, slb5, slb, slb2, slb4])
+                    back.setDisabled(true)
+                    first.setDisabled(true)
+                    const slmenucom = new ActionRowBuilder().addComponents([cancel, first, back, next, end])
                     await i.update({ embeds: [slembed], components: [slmenucom] }).then(async (msg) => {
                         const filter = (button) => button.user.id === i.user.id
                         const collector = msg.createMessageComponentCollector(filter, { time: 60000 })
                         collector.on('collect', async (b) => {
-                            if (b.customId === 'slb') {
+                            if (b.customId === 'back') {
                                 if (page > 0) page -= 1
                                 if (page < slpages.length) {
                                     for (let i = 0; i < slpages[page].length; i++) {
@@ -152,7 +151,6 @@ module.exports = {
                                         **OneClick**
                                         <beatsaver://${sls.songId}>`
                                         })
-
                                     }
                                 }
                                 else {
@@ -160,9 +158,17 @@ module.exports = {
                                 }
                                 if (slpages[page].length == 0) slembed.setDescription('곡이 존재하지 않습니다.')
                                 slembed.setTitle(`곡 리스트 [${page + 1}/${slpages.length}]`)
+                                if (page < slpages.length) {
+                                    next.setDisabled(false)
+                                    end.setDisabled(false)
+                                }
+                                if (page == 0) {
+                                    back.setDisabled(true)
+                                    first.setDisabled(true)
+                                }
                                 await b.update({ embeds: [slembed], components: [slmenucom] })
                             }
-                            else if (b.customId === 'slb2') {
+                            else if (b.customId === 'next') {
                                 if (page < slpages.length) page += 1
                                 if (page < slpages.length) {
                                     for (let i = 0; i < slpages[page].length; i++) {
@@ -182,12 +188,22 @@ module.exports = {
                                         })
                                     }
                                     slembed.setTitle(`곡 리스트 [${page + 1}/${slpages.length}]`)
+                                    if (page + 1 >= slpages.length) {
+                                        next.setDisabled(true)
+                                        end.setDisabled(true)
+                                        back.setDisabled(false)
+                                        first.setDisabled(false)
+                                        b.update({ embeds: [slembed], components: [slmenucom] })
+                                        return;
+                                    }
+                                    back.setDisabled(false)
+                                    first.setDisabled(false)
                                     b.update({ embeds: [slembed], components: [slmenucom] })
                                 }
-                            } else if (b.customId === 'slb3') {
+                            } else if (b.customId === 'cancel') {
                                 await b.update({ embeds: [slembed], components: [] })
                                 collector.stop()
-                            } else if (b.customId === 'slb4') {
+                            } else if (b.customId === 'end') {
                                 page = slpages.length - 1
                                 if (page < slpages.length) {
                                     for (let i = 0; i < slpages[page].length; i++) {
@@ -203,12 +219,17 @@ module.exports = {
                                         [Preview](https://skystudioapps.com/bs-viewer/?id=${sls.songId})
                                         [Zip download](${sls.downloadUrl})
                                         **OneClick**
-                                        <beatsaver://${sls.songId}>`})
+                                        <beatsaver://${sls.songId}>`
+                                        })
                                     }
                                 }
                                 slembed.setTitle(`곡 리스트 [${page + 1}/${slpages.length}]`)
+                                back.setDisabled(false)
+                                first.setDisabled(false)
+                                next.setDisabled(true)
+                                end.setDisabled(true)
                                 await b.update({ embeds: [slembed], components: [slmenucom] })
-                            } else if (b.customId === 'slb5') {
+                            } else if (b.customId === 'first') {
                                 page = 0
                                 if (page < slpages.length) {
                                     for (let i = 0; i < slpages[page].length; i++) {
@@ -224,10 +245,15 @@ module.exports = {
                                         [Preview](https://skystudioapps.com/bs-viewer/?id=${sls.songId})
                                         [Zip download](${sls.downloadUrl})
                                         **OneClick**
-                                        <beatsaver://${sls.songId}>`})
+                                        <beatsaver://${sls.songId}>`
+                                        })
                                     }
                                 }
                                 slembed.setTitle(`곡 리스트 [${page + 1}/${slpages.length}]`)
+                                back.setDisabled(true)
+                                first.setDisabled(true)
+                                next.setDisabled(false)
+                                end.setDisabled(false)
                                 await b.update({ embeds: [slembed], components: [slmenucom] })
                             }
                         })
