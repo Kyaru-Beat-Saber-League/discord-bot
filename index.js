@@ -1,4 +1,6 @@
-const { Client, Collection, Partials, IntentsBitField} = require('discord.js');
+const { Client, Collection, Partials, IntentsBitField } = require('discord.js');
+const fs = require('fs');
+const extra = require('fs-extra');
 require('dotenv').config()
 
 const client = new Client({
@@ -9,6 +11,11 @@ module.exports = client;
 client.commands = new Collection();
 client.slashcommands = new Collection();
 client.config = require('./config');
+
+// if leagueconfig.js is not exist, create it.
+if (!fs.existsSync('./config/leagueconfig.js')) {
+    extra.copySync('./config/leagueconfig-sample.js', './config/leagueconfig.js')
+}
 
 require('./handler')(client);
 client.login(process.env.TOKEN);
