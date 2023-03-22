@@ -11,9 +11,9 @@ let config = require(configpath)
 const Endpoint_API = 'https://api.kbsl.dev:443'
 const channelname = '리그-알림'
 
-async function newleagealert(ch) {
+async function newleagealert(chh) {
     try {
-        const res = await axios.get(`${Endpoint_API}/league?page=0`)
+        const res = await axios.get(`${Endpoint_API}/league?page=0&leagueStatusType=TYPE_ALL`)
         const data = res.data.data;
         const lastNotice = data.content[0];
         if (lastNotice.seq !== config.newlgseq) {
@@ -22,7 +22,7 @@ async function newleagealert(ch) {
                 if (ch) {
                     const embed = new Discord.EmbedBuilder()
                     embed.setTitle(`새로운 리그가 등록되었습니다!`)
-                    embed.addFields({ name: `${lastNotice.leagueName} [ #${lastNotice.seq} ]`, value: `${lastNotice.description}\n\n**시작: ${lastNotice.leagueStartDtime}\n끝: ${lastNotice.leagueEndDtime}**\n[이동하기](https://kbsl.dev/league/detail?${lastNotice.seq})` })
+                    embed.addFields({ name: `${lastNotice.leagueName} [ #${lastNotice.seq} ]`, value: `${lastNotice.description}\n\n만든사람: ${lastNotice.userName}\n**시작: ${lastNotice.leagueStartDtime}\n끝: ${lastNotice.leagueEndDtime}**\n[이동하기](https://kbsl.dev/league/detail?${lastNotice.seq})` })
                     ch.send({ embeds: [embed] })
                 }
             })
@@ -35,7 +35,5 @@ async function newleagealert(ch) {
         console.log(err)
     }
 }
-
-module.exports = { newleagealert }
 
 module.exports = { newleagealert }

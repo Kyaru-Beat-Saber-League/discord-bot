@@ -64,7 +64,6 @@ module.exports = {
             }
             if(pages[page].length == 0) embed.setDescription('리그 목록이 존재하지 않습니다.')
             await interaction.reply({ embeds: [embed] })
-            console.log(list)
         } catch (err) {
             console.log(err)
         }
