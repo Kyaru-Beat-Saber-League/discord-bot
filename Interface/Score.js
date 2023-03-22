@@ -7,5 +7,5 @@ async function Scores(msg){
     const getlist = await axios.get(`${Endpoint_API}/league/`).catch((err) => {
         return err.response
     })
-    return getlist
+    return getlist.data.data
 }
