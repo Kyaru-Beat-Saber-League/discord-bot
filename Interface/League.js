@@ -21,7 +21,7 @@ async function Leaguelist(msg){
 
 async function Leaguetimer(msg){
     if(!msg) msg = 1
-    const getlist = await axios.get(`${Endpoint_API}/league?page=0&leagueStatusType=TYPE_ALL`).catch((err) => {
+    const getlist = await axios.get(`${Endpoint_API}/league?page=${msg}&leagueStatusType=TYPE_ALL`).catch((err) => {
         return err.response
     })
     return getlist.data.data
