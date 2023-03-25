@@ -13,11 +13,13 @@ const dbconfig = {
 
 const dbClient = new pg.Client(dbconfig);
 
-dbClient.connect((err) => {
+dbClient.connect(async (err) => {
     if (err) {
         console.log(err);
     } else {
         console.log('Connected to PostgreSQL');
+        const usrready = await dbClient.query(`select * from kbslusers order by id asc`)
+        console.log(`유저 데이터 ${usrready.rowCount} 개 로드 완료`)
     }
 })
 
