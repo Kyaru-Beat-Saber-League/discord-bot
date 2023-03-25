@@ -12,7 +12,7 @@ async function Leagueinfo(msg){
     return getlist
 }
 async function Leaguelist(msg){
-    if(!msg) msg = 0;
+    if(!msg) msg = 1;
     const getlist = await axios.get(`${Endpoint_API}/league?page=${msg}&leagueStatusType=TYPE_ALL`).catch((err) => {
         return err.response
     })
@@ -20,7 +20,7 @@ async function Leaguelist(msg){
 }
 
 async function Leaguetimer(msg){
-    if(!msg) msg = 1
+    if(!msg) msg = 1;
     const getlist = await axios.get(`${Endpoint_API}/league?page=${msg}&leagueStatusType=TYPE_ALL`).catch((err) => {
         return err.response
     })

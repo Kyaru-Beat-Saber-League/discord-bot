@@ -9,7 +9,7 @@ const channelname = '리그-알림'
 
 async function newleagealert() {
     try {
-        const configpath = path.join(__dirname, '../config/leagueconfig.js')
+        const configpath = path.join(__dirname, '../Config/leagueconfig.js')
         let config = require(configpath)
         const data = await Leaguetimer()
         const lastNotice = data.content[0];

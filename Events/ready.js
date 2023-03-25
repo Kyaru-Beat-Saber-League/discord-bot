@@ -6,7 +6,7 @@ module.exports = {
 }
 
 client.on(Discord.Events.ClientReady, async (client) => {
-    console.log(`\nLogged in as ${client.user.tag} | ${client.user.id}!`);
+    console.log(`Logged in as ${client.user.tag} | ${client.user.id}!`);
     client.user.setPresence({ activities: [{ name: `${client.guilds.cache.size} Servers Online`, type: Discord.ActivityType.Watching }]})
     setInterval(() => {
         client.user.setPresence({ activities: [{ name: `${client.guilds.cache.size} Servers Online`, type: Discord.ActivityType.Watching }]})

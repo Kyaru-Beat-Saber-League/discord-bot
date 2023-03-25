@@ -62,7 +62,7 @@ module.exports = {
             collector.on('collect', async (i) => {
                 if (i.customId == 'songlist') {
                     const songdata = data.songsList
-                    let page = 0
+                    let page = 1
                     slpages = []
                     try {
                         if (songdata.length > 1) {
@@ -108,18 +108,8 @@ module.exports = {
                         for (let i = 0; i < slpages[page].length; i++) {
                             const sls = slpages[page][i]
                             slembed.setThumbnail(sls.coverUrl) // 곡 이미지
-                            slembed.setDescription(`[**${sls.songName} [ ${sls.songId} ]**](https://beatsaver.com/maps/${sls.songId}) #${sls.seq}\n
-                            Mapper: ${sls.uploaderName}
-                            Difficulty: ${sls.songDifficulty}
-                            ModeType: ${sls.songModeType}`)
-                            slembed.setFields({
-                                name: `링크`, value: `
-                            [BeatSaver](https://beatsaver.com/maps/${sls.songId})
-                            [Preview](https://skystudioapps.com/bs-viewer/?id=${sls.songId})
-                            [Zip download](${sls.downloadUrl})
-                            **OneClick**
-                            <beatsaver://${sls.songId}>`
-                            })
+                            slembed.setDescription(`[**${sls.songName} [ ${sls.songId} ]**](https://beatsaver.com/maps/${sls.songId}) #${sls.seq}\n\nMapper: ${sls.uploaderName}\nDifficulty: ${sls.songDifficulty}\nModeType: ${sls.songModeType}`)
+                            slembed.setFields({ name: `링크`, value: `\n[BeatSaver](https://beatsaver.com/maps/${sls.songId})\n[Preview](https://skystudioapps.com/bs-viewer/?id=${sls.songId})\n[Zip download](${sls.downloadUrl})\n**OneClick**\n<beatsaver://${sls.songId}>` })
                         }
                     }
                     else {
@@ -139,18 +129,8 @@ module.exports = {
                                     for (let i = 0; i < slpages[page].length; i++) {
                                         const sls = slpages[page][i]
                                         slembed.setThumbnail(sls.coverUrl) // 곡 이미지
-                                        slembed.setDescription(`[**${sls.songName} [ ${sls.songId} ]**](https://beatsaver.com/maps/${sls.songId}) #${sls.seq}\n
-                                        Mapper: ${sls.uploaderName}
-                                        Difficulty: ${sls.songDifficulty}
-                                        ModeType: ${sls.songModeType}`)
-                                        slembed.setFields({
-                                            name: `링크`, value: `
-                                        [BeatSaver](https://beatsaver.com/maps/${sls.songId})
-                                        [Preview](https://skystudioapps.com/bs-viewer/?id=${sls.songId})
-                                        [Zip download](${sls.downloadUrl})
-                                        **OneClick**
-                                        <beatsaver://${sls.songId}>`
-                                        })
+                                        slembed.setDescription(`[**${sls.songName} [ ${sls.songId} ]**](https://beatsaver.com/maps/${sls.songId}) #${sls.seq}\nMapper: ${sls.uploaderName}\nDifficulty: ${sls.songDifficulty}\nModeType: ${sls.songModeType}`)
+                                        slembed.setFields({ name: `링크`, value: `[BeatSaver](https://beatsaver.com/maps/${sls.songId})\n[Preview](https://skystudioapps.com/bs-viewer/?id=${sls.songId})\n[Zip download](${sls.downloadUrl})\n**OneClick**\n<beatsaver://${sls.songId}>` })
                                     }
                                 }
                                 else {
@@ -174,18 +154,8 @@ module.exports = {
                                     for (let i = 0; i < slpages[page].length; i++) {
                                         const sls = slpages[page][i]
                                         slembed.setThumbnail(sls.coverUrl) // 곡 이미지
-                                        slembed.setDescription(`[**${sls.songName} [ ${sls.songId} ]**](https://beatsaver.com/maps/${sls.songId}) #${sls.seq}\n
-                                        Mapper: ${sls.uploaderName}
-                                        Difficulty: ${sls.songDifficulty}
-                                        ModeType: ${sls.songModeType}`)
-                                        slembed.setFields({
-                                            name: `링크`, value: `
-                                        [BeatSaver](https://beatsaver.com/maps/${sls.songId})
-                                        [Preview](https://skystudioapps.com/bs-viewer/?id=${sls.songId})
-                                        [Zip download](${sls.downloadUrl})
-                                        **OneClick**
-                                        <beatsaver://${sls.songId}>`
-                                        })
+                                        slembed.setDescription(`[**${sls.songName} [ ${sls.songId} ]**](https://beatsaver.com/maps/${sls.songId}) #${sls.seq}\nMapper: ${sls.uploaderName}\nDifficulty: ${sls.songDifficulty}\nModeType: ${sls.songModeType}`)
+                                        slembed.setFields({ name: `링크`, value: `[BeatSaver](https://beatsaver.com/maps/${sls.songId})\n[Preview](https://skystudioapps.com/bs-viewer/?id=${sls.songId})\n[Zip download](${sls.downloadUrl})\n**OneClick**\n<beatsaver://${sls.songId}>` })
                                     }
                                     slembed.setTitle(`곡 리스트 [${page + 1}/${slpages.length}]`)
                                     if (page + 1 >= slpages.length) {
@@ -209,18 +179,8 @@ module.exports = {
                                     for (let i = 0; i < slpages[page].length; i++) {
                                         const sls = slpages[page][i]
                                         slembed.setThumbnail(sls.coverUrl) // 곡 이미지
-                                        slembed.setDescription(`[**${sls.songName} [ ${sls.songId} ]**](https://beatsaver.com/maps/${sls.songId}) #${sls.seq}\n
-                                        Mapper: ${sls.uploaderName}
-                                        Difficulty: ${sls.songDifficulty}
-                                        ModeType: ${sls.songModeType}`)
-                                        slembed.setFields({
-                                            name: `링크`, value: `
-                                        [BeatSaver](https://beatsaver.com/maps/${sls.songId})
-                                        [Preview](https://skystudioapps.com/bs-viewer/?id=${sls.songId})
-                                        [Zip download](${sls.downloadUrl})
-                                        **OneClick**
-                                        <beatsaver://${sls.songId}>`
-                                        })
+                                        slembed.setDescription(`[**${sls.songName} [ ${sls.songId} ]**](https://beatsaver.com/maps/${sls.songId}) #${sls.seq}\n\nMapper: ${sls.uploaderName}\nDifficulty: ${sls.songDifficulty}\nModeType: ${sls.songModeType}`)
+                                        slembed.setFields({ name: `링크`, value: `\n[BeatSaver](https://beatsaver.com/maps/${sls.songId})\n[Preview](https://skystudioapps.com/bs-viewer/?id=${sls.songId})\n[Zip download](${sls.downloadUrl})\n**OneClick**\n<beatsaver://${sls.songId}>` })
                                     }
                                 }
                                 slembed.setTitle(`곡 리스트 [${page + 1}/${slpages.length}]`)
@@ -235,18 +195,8 @@ module.exports = {
                                     for (let i = 0; i < slpages[page].length; i++) {
                                         const sls = slpages[page][i]
                                         slembed.setThumbnail(sls.coverUrl) // 곡 이미지
-                                        slembed.setDescription(`[**${sls.songName} [ ${sls.songId} ]**](https://beatsaver.com/maps/${sls.songId}) #${sls.seq}\n
-                                        Mapper: ${sls.uploaderName}
-                                        Difficulty: ${sls.songDifficulty}
-                                        ModeType: ${sls.songModeType}`)
-                                        slembed.setFields({
-                                            name: `링크`, value: `
-                                        [BeatSaver](https://beatsaver.com/maps/${sls.songId})
-                                        [Preview](https://skystudioapps.com/bs-viewer/?id=${sls.songId})
-                                        [Zip download](${sls.downloadUrl})
-                                        **OneClick**
-                                        <beatsaver://${sls.songId}>`
-                                        })
+                                        slembed.setDescription(`[**${sls.songName} [ ${sls.songId} ]**](https://beatsaver.com/maps/${sls.songId}) #${sls.seq}\n\nMapper: ${sls.uploaderName}\nDifficulty: ${sls.songDifficulty}\nModeType: ${sls.songModeType}`)
+                                        slembed.setFields({ name: `링크`, value: `\n[BeatSaver](https://beatsaver.com/maps/${sls.songId})\n[Preview](https://skystudioapps.com/bs-viewer/?id=${sls.songId})\n[Zip download](${sls.downloadUrl})\n**OneClick**\n<beatsaver://${sls.songId}>` })
                                     }
                                 }
                                 slembed.setTitle(`곡 리스트 [${page + 1}/${slpages.length}]`)

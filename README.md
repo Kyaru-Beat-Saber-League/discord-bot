@@ -15,6 +15,11 @@ $ node index.js
 ## .env Config (Required for running, Create .env file in the directory)
 ````.env
 TOKEN="Your Discord Bot Token" // Discord Bot Token
+DB_HOST="Db Host" // Db Host
+DB_USER="Db User" // Db User
+DB_PORT="Db Port" // Db Port
+DB_PASSWORD="Db Password" // Db Password
+DB_DATABASE="Db Name" // Db Name
 ````
 ## config.js Config
 ````javascript

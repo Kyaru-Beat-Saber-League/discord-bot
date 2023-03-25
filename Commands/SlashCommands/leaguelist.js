@@ -22,7 +22,7 @@ module.exports = {
      */
     run: async (client, interaction, args) => {
         let page = interaction.options.get('page')?.value
-        if (page == undefined) page = 0
+        if (page == undefined) page = 1
         const list = await Leaguelist()
         pages = [];
         try {
