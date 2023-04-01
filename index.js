@@ -12,10 +12,5 @@ client.commands = new Collection();
 client.slashcommands = new Collection();
 client.config = require('./config');
 
-// if leagueconfig.js is not exist, create it.
-if (!fs.existsSync('./Config/leagueconfig.js')) {
-    extra.copySync('./Config/leagueconfig-sample.js', './Config/leagueconfig.js')
-}
-
 require('./handler')(client);
 client.login(process.env.TOKEN);
