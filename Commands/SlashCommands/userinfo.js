@@ -37,7 +37,7 @@ module.exports = {
             embed.addFields({ name: '역할', value: `${role}` })
             await interaction.reply({ embeds: [embed] })
         } catch (err) {
-            return interaction.reply({ content: `\`\`\`고유번호, 아이디, 혹은 링크가 아닙니다. 다시한번 확인해주세요!\`\`\``, ephemeral: true })
+            return interaction.reply({ content: `\`고유번호, 아이디, 혹은 링크가 아닙니다. 다시한번 확인해주세요!\``+`\`\`\`${err}\`\`\``, ephemeral: true })
         }
     }
 }

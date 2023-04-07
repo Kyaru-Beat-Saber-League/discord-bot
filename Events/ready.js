@@ -1,6 +1,6 @@
 const client = require('../index.js');
 const Discord = require('discord.js');
-const dbClient = require('../Database/database.js')
+const dbClient = require('../Database/database.js');
 module.exports = {
     name: 'ready'
 }
