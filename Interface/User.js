@@ -2,7 +2,7 @@ const axios = require('axios')
 const client = require('../index.js')
 const Discord = require('discord.js')
 
-const Endpoint_API = 'https://api.kbsl.dev:443'
+const Endpoint_API = client.config.api
 
 async function User(usr) {
     const getuser = await axios.get(`${Endpoint_API}/user/${usr}`).catch((err) => {

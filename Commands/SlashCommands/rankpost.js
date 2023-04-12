@@ -1,6 +1,7 @@
 const { CommandInteraction, ApplicationCommandType, ApplicationCommandOptionType, EmbedBuilder, Colors } = require('discord.js');
 const client = require('../../index.js');
-const { User } = require('../../Interface/User.js')
+const axios = require('axios')
+const dbClient = require('../../Database/database.js')
 
 module.exports = {
     name: 'rankpost',
@@ -10,10 +11,10 @@ module.exports = {
     options: [
     {
         name: 'songseqid',
-        description: '비트리더 아이디',
+        description: '노래 아이디',
         type: ApplicationCommandOptionType.String,
         required: true,
-    }
+    },
     ],
     /**
      * @param {client} client
@@ -22,16 +23,25 @@ module.exports = {
      */
     run: async (client, interaction, args) => {
         if (interaction.user.id != '380629788940959746') return false;
-        const userid = interaction.options.get('userid')?.value
-        const usr = await User(userid)
-        const embed = new EmbedBuilder()
-        embed.setTitle(`유저 정보`)
-        embed.setColor(Colors.Aqua)
-        embed.setThumbnail(usr.data.imageUrl)
-        embed.addFields({name:'유저 이름', value:usr.data.userName})
-        embed.addFields({name:'아이디', value:`고유번호: **\`${usr.data.seq}\`**\n스팀 아이디: **\`${usr.data.steamId}\`**`})
-        const role = usr.data.erole == 'ROLE_USER' ? '유저' : usr.data.erole
-        embed.addFields({name: '역할', value:`${role}`})
-        await interaction.reply({embeds:[embed]})
+        const songseqid = interaction.options.get('userid')?.value
+        const stuser = await dbClient.query(`select * from kbslusers where user_id = '${interaction.user.id}'`)
+        if(stuser.rowCount == 0) return await interaction.reply({content:'먼저 계정을 연동해주세요.', ephemeral: true})
+        const param = {
+            "songSeq" : songseqid,
+            "steamId" : stuser.rows[0].steam_id,
+        }
+        const res = await axios({
+            method: 'post',
+            url: `${client.config.api}/rank`,
+            params: param
+        })
+        switch(res.data.status){
+            case 201:
+                await interaction.reply({content:'등록이 완료되었습니다.'})
+                break
+            default:
+                await interaction.reply({content:`등록에 실패했습니다. \`\`\`에러코드: ${res.data.status}\`\`\``})
+                break
+        }
     }
 }

@@ -2,7 +2,7 @@ const Discord = require('discord.js')
 const client = require('../index')
 const axios = require('axios')
 
-const Endpoint_API = 'https://api.kbsl.dev:443'
+const Endpoint_API = client.config.api
 
 async function Leagueinfo(msg){
     if(!msg) msg = 1

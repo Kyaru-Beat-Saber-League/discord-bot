@@ -1,6 +1,6 @@
 const axios = require('axios')
 
-const Endpoint_API = 'https://api.kbsl.dev:443'
+const Endpoint_API = client.config.api
 
 async function Scores(msg) {
     if (!msg) msg = 1
