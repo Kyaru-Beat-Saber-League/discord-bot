@@ -1,6 +1,4 @@
 const { Client, Collection, Partials, IntentsBitField } = require('discord.js');
-const fs = require('fs');
-const extra = require('fs-extra');
 require('dotenv').config()
 
 const client = new Client({

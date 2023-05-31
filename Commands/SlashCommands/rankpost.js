@@ -14,8 +14,7 @@ module.exports = {
         description: '노래 아이디',
         type: ApplicationCommandOptionType.String,
         required: true,
-    },
-    ],
+    },],
     /**
      * @param {client} client
      * @param {CommandInteraction} interaction
